@@ -6,7 +6,7 @@ export default function Navbar() {
           Alchemy Tx Simulation ⚡️
         </a>
       </div>
-      <div className="flex-none">
+      {/* <div className="flex-none">
         <ul className="menu menu-horizontal px-1">
           <li>
             <a>Profile</a>
@@ -25,7 +25,7 @@ export default function Navbar() {
             </details>
           </li>
         </ul>
-      </div>
+      </div> */}
     </div>
   );
 }

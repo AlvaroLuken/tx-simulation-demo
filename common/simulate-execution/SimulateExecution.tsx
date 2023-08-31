@@ -24,7 +24,7 @@ export default function SimulateExecution() {
       </button>
       {/* Open the modal using ID.showModal() method */}
       <button
-        className="ml-4 btn text-white"
+        className="ml-4 btn text-white bg-[#092304] hover:bg-[#3d3f3d]"
         onClick={() => window.my_modal_2.showModal()}
       >
         Bundle Simulation

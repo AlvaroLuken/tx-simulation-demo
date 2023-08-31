@@ -8,7 +8,7 @@ export default function AssetChanges() {
     });
     if (response.ok) {
       const data = await response.json();
-      console.log(data);
+      console.log("data from client:", data);
     } else {
       console.error("Failed");
     }
@@ -19,7 +19,7 @@ export default function AssetChanges() {
         onClick={getSimulatedAssetChanges}
         className="btn bg-[#f8ff23] text-black font-mono"
       >
-        Simulate Tx
+        Simulate Asset Changes
       </button>
     </div>
   );
