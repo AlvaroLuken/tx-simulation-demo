@@ -16,10 +16,8 @@ export default function AssetChanges() {
     }
   }
   return (
-    <div className="flex items-center justify-center bg-base-200">
-      <Button onClick={getSimulatedAssetChanges}>
-        Simulate Asset Changes
-      </Button>
-    </div>
+    <Button onClick={getSimulatedAssetChanges}>
+      Simulate Asset Changes
+    </Button>
   );
 }

@@ -7,8 +7,8 @@ export default function BundleSimulation () {
 
   return (
     <>
-     <Button onClick={getBundleSimulation}>
-     Bundle Simulation
+    <Button onClick={getBundleSimulation}>
+      Bundle Simulation
     </Button>
    </>
   )

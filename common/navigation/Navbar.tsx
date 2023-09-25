@@ -1,31 +1,38 @@
-export default function Navbar() {
+import Button from "@common/Button";
+import useTheme from "@common/hooks/useTheme";
+import { useEffect } from "react";
+
+const ThemeSwitcher = () => {
+  const {theme, switchTheme} = useTheme();
+  useEffect(() => {
+    document.querySelector("html")?.setAttribute('data-theme', theme);
+  }, [theme]);
+
   return (
-    <div className="bg-[#faa] navbar bg-base-100 font-mono text-black">
+    <div className="flex flex-row gap-3">
+      <Button onClick={() => switchTheme("cupcake")} classNames={`btn-neutral btn-sm ${theme === "cupcake" ? `` : `btn-outline`}`}>
+        🧁
+      </Button>
+      <Button onClick={() => switchTheme("dark")} classNames={`btn-neutral btn-sm ${theme === "dark" ? `` : `btn-outline`}`}>
+        🌕
+      </Button>
+      <Button onClick={() => switchTheme("forest")} classNames={`btn-neutral btn-sm ${theme === "forest" ? `` : `btn-outline`}`}>
+        🌳
+      </Button>
+    </div>
+  )
+}
+
+export default function Navbar() {
+
+  return (
+    <div className="navbar font-mono bg-base-200">
       <div className="flex-1">
         <a className="btn btn-ghost normal-case text-xl">
           Alchemy Tx Simulation ⚡️
         </a>
       </div>
-      {/* <div className="flex-none">
-        <ul className="menu menu-horizontal px-1">
-          <li>
-            <a>Profile</a>
-          </li>
-          <li>
-            <details>
-              <summary>Menu</summary>
-              <ul className="p-2 bg-base-100">
-                <li>
-                  <a>Link 1</a>
-                </li>
-                <li>
-                  <a>Link 2</a>
-                </li>
-              </ul>
-            </details>
-          </li>
-        </ul>
-      </div> */}
+      <ThemeSwitcher/>
     </div>
   );
 }

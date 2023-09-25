@@ -4,8 +4,10 @@ import Hero from "@common/hero/Hero";
 import SimulateExecution from "@common/simulate-execution/SimulateExecution";
 import "./globals.css";
 import BundleSimulation from "@common/bundle-simulation/BundleSimulation";
+import { useState } from "react";
 
 export default function Home() {
+  const [dataDisplay, setDataDisplay] = useState<string | null>(null);
   return (
     <main className="flex flex-col">
       <Hero />
@@ -13,6 +15,9 @@ export default function Home() {
         <AssetChanges />
         <SimulateExecution />
         <BundleSimulation />
+      </div>
+      <div className="bg-primary w-1/2 h-96 mx-auto my-12 rounded-xl">
+        {dataDisplay}
       </div>
     </main>
   );

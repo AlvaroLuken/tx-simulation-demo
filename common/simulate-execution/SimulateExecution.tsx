@@ -17,10 +17,8 @@ export default function SimulateExecution() {
   }
 
   return (
-    <div className="flex items-center justify-center bg-base-200">
-      <Button onClick={getSimulatedAssetChanges}>
-        Simulate Execution
-      </Button>
-    </div>
+    <Button onClick={getSimulatedAssetChanges}>
+      Simulate Execution
+    </Button>
   );
 }

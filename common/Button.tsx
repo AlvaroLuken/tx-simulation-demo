@@ -6,16 +6,17 @@ type ButtonProps = Omit<
 > & {
   children?: ReactNode,
   onClick?: () => void,
-  isLoading?: boolean
+  isLoading?: boolean,
+  classNames?:string
 }
 
 export default function Button (props: ButtonProps) {
-  const {children, isLoading, ...restProps} = props;
+  const {children, isLoading,classNames, ...restProps} = props;
 
   return (
     <button
       {...restProps}
-      className="btn bg-[#f8ff23] text-black font-mono hover:bg-[#92944f]"
+      className={`btn font-mono ${classNames}`}
     >
       {children}
     </button>

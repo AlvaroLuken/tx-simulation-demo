@@ -3,6 +3,7 @@ import Navbar from "@common/navigation/Navbar";
 import { ConnectKitProvider, getDefaultConfig } from "connectkit";
 import { WagmiConfig, createConfig } from "wagmi";
 import "./globals.css";
+import useTheme from "@common/hooks/useTheme";
 
 const config = createConfig(
   getDefaultConfig({
@@ -25,14 +26,15 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const {theme} = useTheme();
+
   return (
-    <html lang="en">
+    <html data-theme={theme}>
       <WagmiConfig config={config}>
         <ConnectKitProvider mode="dark">
           <body>
             <Navbar />
             <div style={{ flexGrow: 1 }}>{children}</div>
-            {/* <Footer /> */}
           </body>
         </ConnectKitProvider>
       </WagmiConfig>
