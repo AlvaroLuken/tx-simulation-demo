@@ -1,3 +1,5 @@
+import Button from "@common/Button";
+
 export default function AssetChanges() {
   async function getSimulatedAssetChanges() {
     const response = await fetch("/api/asset-changes/", {
@@ -15,12 +17,9 @@ export default function AssetChanges() {
   }
   return (
     <div className="flex items-center justify-center bg-base-200">
-      <button
-        onClick={getSimulatedAssetChanges}
-        className="btn bg-[#f8ff23] text-black font-mono"
-      >
+      <Button onClick={getSimulatedAssetChanges}>
         Simulate Asset Changes
-      </button>
+      </Button>
     </div>
   );
 }
