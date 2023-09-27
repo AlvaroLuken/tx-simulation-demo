@@ -28,10 +28,10 @@ export async function POST() {
           method: "alchemy_simulateAssetChanges",
           params: [
             {
-              from: "0xd8da6bf26964af9d7eed9e03e53415d37aa96045",
-              to: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+              from: "0x8B20249B3B2ee65669b622E56cc9be5c3cd80917",
+              to: "0xdAC17F958D2ee523a2206206994597C13D831ec7",
               value: "0x0",
-              data: "0xa9059cbb000000000000000000000000fc43f5f9dd45258b3aff31bdbe6561d97e8b71de00000000000000000000000000000000000000000000000000000000000f4240"
+              data: "0xa9059cbb00000000000000000000000042719590da938bcb6787627a48ccc77c61d7f7710000000000000000000000000000000000000000000000000000000077359400"
             },
           ],
         }),
