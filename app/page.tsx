@@ -4,24 +4,47 @@ import Hero from "@common/hero/Hero";
 import SimulateExecution from "@common/simulate-execution/SimulateExecution";
 import "./globals.css";
 import BundleSimulation from "@common/bundle-simulation/BundleSimulation";
-import { useState } from "react";
+import { ReactNode, useState } from "react";
+
+const MockupCode = ({ children }: { children: ReactNode }) => {
+  return (
+    <div className="mockup-code w-1/2 h-96 mx-auto my-12 rounded-xl overflow-auto">
+      {children}
+    </div>
+  )
+}
+
+const MockupCodeComponent = ({ children, center = false }: { children: ReactNode, center?: boolean }) => {
+  if (center) {
+    return (
+      <MockupCode>
+        <div className="w-full h-full items-center justify-center flex flex-col">
+          {children}
+        </div>
+      </MockupCode>
+    )
+  }
+  return (
+    <MockupCode>
+      <pre>
+        {children}
+      </pre>
+    </MockupCode>
+  )
+}
 
 const DataDisplay = ({text, loading}: {text: string | null, loading?: boolean}) => {
   if (loading) {
     return (
-      <div className="mockup-code w-1/2 h-96 mx-auto my-12 rounded-xl ">
-        <div className="w-full h-full items-center justify-center flex flex-col">
-          <span className="loading loading-ring loading-lg"></span>
-        </div>
-      </div>
+      <MockupCodeComponent center>
+        <span className="loading loading-ring loading-lg"></span>
+      </MockupCodeComponent>
     )
   }
   return (
-    <div className="mockup-code w-1/2 h-96 mx-auto my-12 rounded-xl overflow-auto">
-      <pre>
-        {text || "Simulate a transaction to begin"}
-      </pre>
-    </div>
+    <MockupCodeComponent>
+      {text || "Simulate a transaction to begin"}
+    </MockupCodeComponent>
   )
 }
 
