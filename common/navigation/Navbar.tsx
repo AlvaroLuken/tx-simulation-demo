@@ -29,7 +29,7 @@ export default function Navbar() {
     <div className="navbar font-mono bg-base-200">
       <div className="flex-1">
         <a className="btn btn-ghost normal-case text-xl">
-          Alchemy Tx Simulation ⚡️
+          Alchemy Code Demos ⚡️
         </a>
       </div>
       <ThemeSwitcher/>
