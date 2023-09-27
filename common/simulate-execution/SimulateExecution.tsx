@@ -1,43 +1,47 @@
-export default function SimulateExecution() {
-  async function getSimulatedAssetChanges() {
-    const response = await fetch("/api/simulate-execution/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    if (response.ok) {
-      const data = await response.json();
-      console.log(data);
+import Button from "@common/Button";
+import { executeAlchemyApiWithParams } from "@common/alchemy";
+import { useState } from "react";
+
+const DEFAULT_PARAMS = {
+  id: 1,
+  jsonrpc: "2.0",
+  method: "alchemy_simulateExecution",
+  params: [
+    {
+      from: "0x82E1d4DDd636857Ebcf6a0e74B9b0929C158D7FB",
+      to: "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+      value: "0x0",
+      data: "0xa9059cbb00000000000000000000000042719590da938bcb6787627a48ccc77c61d7f7710000000000000000000000000000000000000000000000000000000077359400"
+    },
+    ],
+}
+
+export default function SimulateExecution({
+  onComplete,
+  setDataLoading,
+  setError
+}: {
+  onComplete: (d: string) => void,
+  setDataLoading: (v: boolean) => void,
+  setError: () => void
+}) {
+  const [params, setParams] = useState<string>(JSON.stringify(DEFAULT_PARAMS));
+  async function getSimulatedExecution() {
+    setDataLoading(true)
+    const response = await executeAlchemyApiWithParams(params);
+    if (response.data) {
+      const data = response.data;
+      onComplete(JSON.stringify(data, undefined, 4));
     } else {
+      setError();
       console.error("Failed");
     }
+    setDataLoading(false);
   }
 
   return (
-    <div className="flex items-center justify-center bg-base-200">
-      <button
-        onClick={getSimulatedAssetChanges}
-        className="btn bg-[#37ff14] text-black font-mono"
-      >
-        Simulate Execution
-      </button>
-      {/* Open the modal using ID.showModal() method */}
-      <button
-        className="ml-4 btn text-white"
-        onClick={() => window.my_modal_2.showModal()}
-      >
-        Bundle Simulation
-      </button>
-      <dialog id="my_modal_2" className="modal">
-        <form method="dialog" className="modal-box">
-          <h3 className="font-bold text-lg">Bundle Simulation Response</h3>
-          <p className="py-4">Press ESC key or click outside to close</p>
-        </form>
-        <form method="dialog" className="modal-backdrop">
-          <button>close</button>
-        </form>
-      </dialog>
-    </div>
+    <Button onClick={getSimulatedExecution}>
+      Simulate Execution
+    </Button>
   );
 }
