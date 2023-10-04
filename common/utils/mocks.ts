@@ -1,69 +1,4 @@
-import { ExecutionType } from "app/page"
-
-export type Transaction = {
-  from: string,
-  to: string,
-  value: string,
-  data: string
-}
-
-export type TransactionParam = {
-  id: number,
-  jsonrpc: string,
-  method: string,
-  params: Array <Transaction>
-}
-export type TransactionParams  = Array<TransactionParam>
-
-export type AssetChangesResponse = {
-  jsonrpc: string,
-  id: number,
-  result: {
-    changes: Array<
-      {
-        assetType: "ERC20" | "ERC721" | "ERC1155",
-        changeType: "TRANSFER",
-        from: string,
-        to: string,
-        rawAmount: string,
-        contractAddress: string,
-        tokenId: string | null,
-        decimals: number,
-        symbol: string,
-        name: string,
-        logo: string,
-        amount: string
-      }
-    >,
-    gasUsed: string,
-    error: null | Object
-  }
-}
-
-export type SimulateExecutionResponse = {
-  jsonrpc: string,
-  id: number,
-  result: {
-    changes: Array<
-      {
-        assetType: "ERC20" | "ERC721" | "ERC1155",
-        changeType: "TRANSFER",
-        from: string,
-        to: string,
-        rawAmount: string,
-        contractAddress: string,
-        tokenId: string | null,
-        decimals: number,
-        symbol: string,
-        name: string,
-        logo: string,
-        amount: string
-      }
-    >,
-    gasUsed: string,
-    error: null | Object
-  }
-}
+import { AssetChangesResponse, TransactionParams } from "types"
 
 const mockSimulateAssetChanges: TransactionParams = [
   {
@@ -187,69 +122,24 @@ const mockSimulateAssetChangesResponse: AssetChangesResponse = {
   }
 }
 
-const mockSimulateExecutionResponse: AssetChangesResponse = {
-  "jsonrpc": "2.0",
-  "id": 1,
-  "result": {
-    "changes": [
-      {
-        "assetType": "ERC20",
-        "changeType": "TRANSFER",
-        "from": "0x8b20249b3b2ee65669b622e56cc9be5c3cd80917",
-        "to": "0x42719590da938bcb6787627a48ccc77c61d7f771",
-        "rawAmount": "2000000000",
-        "contractAddress": "0xdac17f958d2ee523a2206206994597c13d831ec7",
-        "tokenId": null,
-        "decimals": 6,
-        "symbol": "USDT",
-        "name": "Tether USDt",
-        "logo": "https://static.alchemyapi.io/images/assets/825.png",
-        "amount": "2000"
-      }
-    ],
-    "gasUsed": "0xf6dd",
-    "error": null
-  }
-}
-
 export const mockParams = {
   simulateExecution: mockSimulateExecution,
   simulateAssetChanges: mockSimulateAssetChanges
 }
-
-export const prepareBundledParams = (type: ExecutionType, selectedParams: TransactionParams) => {
-  let method;
-  switch (type) {
-    case "SIMULATE_ASSET_CHANGES": {
-      method = "alchemy_simulateAssetChangesBundle";
-    }
-    break;
-    case "SIMULATE_EXECUTION": {
-      method = "alchemy_simulateExecutionBundle";
-    }
-    break;
-  }
-  let bundled = {
-    id: 1,
-    method,
-    jsonrpc: "2.0",
-    params: []
-  };
-  for (let i = 0; i < selectedParams.length; i++) {
-    const params = [...bundled.params, [selectedParams[i].params]];
-    Object.assign(bundled, {
-      ...bundled,
-      params
-    })
-  }
-  return bundled;
-}
-
 export const mockResponse = {
-  simulateExecution: {
-    data: mockSimulateExecutionResponse
-  },
   simulateAssetChanges: {
+    data: mockSimulateAssetChangesResponse
+  },
+  simulateExecution: {
+    // @todo
+    data: mockSimulateAssetChangesResponse
+  },
+  simulateAssetChangesBundle: {
+    // @todo
+    data: mockSimulateAssetChangesResponse
+  },
+  simulateExecutionBundle: {
+    // @todo
     data: mockSimulateAssetChangesResponse
   }
 }

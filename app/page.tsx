@@ -1,18 +1,17 @@
 "use client";
 import Hero from "@common/hero/Hero";
 import "./globals.css";
-import { useState } from "react";
-import { executeAlchemyApiWithParams } from "@common/utils/alchemy";
-import { TransactionParams, mockParams, prepareBundledParams } from "@common/utils/mocks";
+import { useEffect, useState } from "react";
+import { executeAlchemyApiWithParams, prepareBundledParams } from "@common/utils/alchemy";
+import { ExecutionType, TransactionParams } from "types";
 import Button from "@common/components/Button";
 import { DataDisplay } from "@common/components/MockupCode";
 import { InputTypeSelector } from "@common/components/InputTypeSelector";
 import { TransactionSelector } from "@common/components/TransactionSelector";
+import { mockParams } from "@common/utils/mocks";
 
-export type ExecutionType = "SIMULATE_EXECUTION" | "SIMULATE_ASSET_CHANGES";
 export default function Home() {
-  const [executionType, setExecutionType] = useState<ExecutionType>("SIMULATE_EXECUTION");
-
+  const [executionType, setExecutionType] = useState<ExecutionType>();
   const getTransactionsToDisplay = () => {
     switch (executionType) {
       case "SIMULATE_ASSET_CHANGES": {
@@ -22,32 +21,47 @@ export default function Home() {
         return mockParams.simulateExecution;
       }
       default: {
-        return mockParams.simulateExecution;
+        return [];
       }
     }
   }
-
   const [dataDisplay, setDataDisplay] = useState<string | null>("Click on the buttons to simulate a transaction");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const setDataDisplayContent = (data: string) => setDataDisplay(data);
   const setDataDisplayLoading = (v: boolean) => setIsLoading(v);
   const setError = () => setDataDisplayContent("There was an error")
-
   const [params, setParams] = useState<TransactionParams>([]);
   const [bundle, setBundle] = useState<boolean>(false);
+
   const execute = async () => {
     setDataDisplayLoading(true)
-    const prepared = bundle ? prepareBundledParams(executionType, params) : params[0]
-    const response = await executeAlchemyApiWithParams(JSON.stringify(prepared));
-    if (response.data) {
-      const data = response.data;
-      setDataDisplayContent(JSON.stringify(data, undefined, 2));
-    } else {
+    try {
+      if (!executionType) {
+        throw "Error: Execution Type not set";
+      }
+      const prepared = bundle ? prepareBundledParams(executionType, params) : params[0]
+      const response = await executeAlchemyApiWithParams(JSON.stringify(prepared));
+      if (response.data) {
+        const data = response.data;
+        setDataDisplayContent(JSON.stringify(data, undefined, 2));
+      } else {
+        throw "Error: data object not found in response";
+      }
+    } catch (err) {
+      setDataDisplayLoading(false)
       setError();
-      console.error("FAILED");
+      console.error(err);
     }
     setDataDisplayLoading(false)
   }
+  const reset = () => {
+    setDataDisplay("Click on the buttons to simulate a transaction");
+    setIsLoading(false);
+    setParams([]);
+  }
+  useEffect(() => {
+    reset();
+  }, [bundle, executionType]);
   return (
     <main className="flex flex-col h-full">
       <Hero />

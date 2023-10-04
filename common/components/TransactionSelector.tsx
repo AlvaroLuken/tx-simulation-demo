@@ -1,5 +1,5 @@
 import formatWalletAddress from "@common/utils/formatWalletAddress";
-import { TransactionParam, TransactionParams } from "@common/utils/mocks";
+import { TransactionParam, TransactionParams } from "types";
 
 export const TransactionSelector = ({
   setParams,
