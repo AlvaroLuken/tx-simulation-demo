@@ -11,7 +11,7 @@ import { TransactionSelector } from "@common/components/TransactionSelector";
 import { mockParams } from "@common/utils/mocks";
 
 export default function Home() {
-  const [executionType, setExecutionType] = useState<ExecutionType>();
+  const [executionType, setExecutionType] = useState<ExecutionType>("SIMULATE_EXECUTION");
   const getTransactionsToDisplay = () => {
     switch (executionType) {
       case "SIMULATE_ASSET_CHANGES": {
@@ -65,7 +65,7 @@ export default function Home() {
   return (
     <main className="flex flex-col h-full">
       <Hero />
-      <div className="flex flex-col items-center gap-6">
+      <div className="flex flex-col items-center gap-6 px-3">
         <div className="flex flex-row items-center gap-4">
           <InputTypeSelector
             text="Simulate Execution"
@@ -96,7 +96,7 @@ export default function Home() {
           />
         </div>
       </div>
-      <div className="grid grid-rows-3 grid-cols-3 gap-3 m-2 flex-1 overflow-auto">
+      <div className="grid grid-rows-3 grid-cols-3 gap-3 m-2 flex-1 overflow-auto px-3">
         <div className="w-full h-full overflow-auto row-span-2">
           <TransactionSelector
             setParams={setParams}
@@ -108,8 +108,8 @@ export default function Home() {
         <div className="col-span-2 row-span-2">
           <DataDisplay text={dataDisplay} loading={isLoading} />
         </div>
-        <div className="col-span-3 flex flex-col items-center justify-center">
-          <Button onClick={execute}>
+        <div className="col-span-3 flex flex-col items-center">
+          <Button onClick={execute} styles="btn-lg">
             Execute
           </Button>
         </div>

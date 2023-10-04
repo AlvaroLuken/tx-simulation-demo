@@ -9,12 +9,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   const {theme} = useTheme();
-
   return (
     <html data-theme={theme}>
       <body className="h-screen">
         <Navbar />
-        <>{children}</>
+        {children}
       </body>
     </html>
   );
