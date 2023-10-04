@@ -1,4 +1,4 @@
-import Button from "@common/Button";
+import Button from "@common/components/Button";
 import useTheme, { Theme } from "@common/hooks/useTheme";
 import { useEffect } from "react";
 
