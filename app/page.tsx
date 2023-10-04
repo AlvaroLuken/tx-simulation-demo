@@ -3,7 +3,7 @@ import Hero from "@common/hero/Hero";
 import "./globals.css";
 import { useState } from "react";
 import { executeAlchemyApiWithParams } from "@common/utils/alchemy";
-import { mockParams } from "@common/utils/mocks";
+import { TransactionParam, mockParams } from "@common/utils/mocks";
 import Button from "@common/components/Button";
 import { DataDisplay } from "@common/components/MockupCode";
 import { InputTypeSelector } from "@common/components/InputTypeSelector";
@@ -34,12 +34,12 @@ export default function Home() {
   const setDataDisplayLoading = (v: boolean) => setIsLoading(v);
   const setError = () => setDataDisplayContent("There was an error")
 
-  const [params, setParams] = useState<string>(JSON.stringify(DEFUALT_PARAMS));
+  const [params, setParams] = useState<TransactionParam>(DEFUALT_PARAMS);
   const [bundle, setBundle] = useState<boolean>(false);
 
   const execute = async () => {
     setDataDisplayLoading(true)
-    const response = await executeAlchemyApiWithParams(params)
+    const response = await executeAlchemyApiWithParams(JSON.stringify(params))
     if (response.data) {
       const data = response.data;
       setDataDisplayContent(JSON.stringify(data, undefined, 2));
@@ -88,6 +88,7 @@ export default function Home() {
           <TransactionSelector
             setParams={setParams}
             transactions={getTransactionsToDisplay()}
+            currentParams={params}
           />
         </div>
         <div className="col-span-2 row-span-2">

@@ -1,4 +1,4 @@
-export type TransactionParams  = Array<{
+export type TransactionParam = {
   id: number,
   jsonrpc: string,
   method: string,
@@ -8,7 +8,8 @@ export type TransactionParams  = Array<{
     value: string,
     data: string
   }>
- }>
+ }
+export type TransactionParams  = Array<TransactionParam>
 
 export type AssetChangesResponse = {
   jsonrpc: string,

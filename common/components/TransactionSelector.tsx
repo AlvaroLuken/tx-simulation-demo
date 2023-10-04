@@ -1,12 +1,14 @@
 import formatWalletAddress from "@common/utils/formatWalletAddress";
-import { TransactionParams } from "@common/utils/mocks";
+import { TransactionParam, TransactionParams } from "@common/utils/mocks";
 
 export const TransactionSelector = ({
   setParams,
-  transactions
+  transactions,
+  currentParams
 }: {
   setParams: (p: any) => void
   transactions: TransactionParams
+  currentParams: TransactionParam
 }) => {
   return (
     <>
@@ -14,8 +16,12 @@ export const TransactionSelector = ({
       transactions.map((tx, key) => {
         return (
           <div
-            className="card w-full bg-base-200 border-2 border-primary-focus mb-3"
+            className={`
+              card w-full border-2 border-primary mb-3 hover:bg-base-300 hover:border-primary-focus cursor-pointer
+              ${currentParams === tx ? "bg-accent" : "bg-base-200"}
+            `}
             key={key}
+            onClick={() => setParams(tx)}
           >
             <div className="card-body text-sm">
               <p>{tx.method}</p>
