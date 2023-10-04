@@ -12,9 +12,9 @@ export default function RootLayout({
 
   return (
     <html data-theme={theme}>
-      <body>
+      <body className="h-screen">
         <Navbar />
-        <div style={{ flexGrow: 1 }}>{children}</div>
+        <>{children}</>
       </body>
     </html>
   );

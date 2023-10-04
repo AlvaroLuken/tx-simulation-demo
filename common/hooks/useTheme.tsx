@@ -1,7 +1,8 @@
 import { useState } from "react";
 
+export type Theme = "dark" | "retro" | "cupcake" | "corporate" | "forest";
+
 export default function useTheme () {
-  type Theme = "dark" | "retro" | "cupcake" | "corporate" | "forest";
-  const [theme, switchTheme] = useState<Theme>("dark");
+  const [theme, switchTheme] = useState<Theme>("forest");
   return {theme, switchTheme};
 }
