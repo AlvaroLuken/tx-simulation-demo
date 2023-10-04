@@ -1,19 +1,20 @@
-export type Transaction = {
+export type ExecutionType = "SIMULATE_EXECUTION" | "SIMULATE_ASSET_CHANGES";
+export type ApiMethod = "alchemy_simulateAssetChanges" | "alchemy_simulateExecution" | "alchemy_simulateAssetChangesBundle" | "alchemy_simulateExecutionBundle"
+type Transaction = {
   from: string,
   to: string,
   value: string,
-  data: string
+  data: string,
 }
 
-export type TransactionParam = {
+type TransactionParam = {
   id: number,
   jsonrpc: string,
-  method: "alchemy_simulateAssetChanges" | "alchemy_simulateExecution" | "alchemy_simulateAssetChangesBundle" | "alchemy_simulateExecutionBundle",
+  method: ApiMethod,
   params: Array <Transaction>
 }
-export type TransactionParams  = Array<TransactionParam>
 
-export type AssetChangesResponse = {
+type AssetChangesResponse = {
   jsonrpc: string,
   id: number,
   result: {
@@ -38,4 +39,11 @@ export type AssetChangesResponse = {
   }
 }
 
-export type ExecutionType = "SIMULATE_EXECUTION" | "SIMULATE_ASSET_CHANGES";
+export type Execution = {
+  apiParams: TransactionParam,
+  response: {
+    data: AssetChangesResponse
+  },
+  // @todo refer etherscan
+  txType: "Transer" | "Contract Call"
+}

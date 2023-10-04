@@ -3,22 +3,22 @@ import Hero from "@common/hero/Hero";
 import "./globals.css";
 import { useEffect, useState } from "react";
 import { executeAlchemyApiWithParams, prepareBundledParams } from "@common/utils/alchemy";
-import { ExecutionType, TransactionParams } from "types";
+import { Execution, ExecutionType } from "types";
 import Button from "@common/components/Button";
 import { DataDisplay } from "@common/components/MockupCode";
 import { InputTypeSelector } from "@common/components/InputTypeSelector";
 import { TransactionSelector } from "@common/components/TransactionSelector";
-import { mockParams } from "@common/utils/mocks";
+import { mockSimulateAssetChanges, mockSimulateExecution } from "@common/utils/mocks";
 
 export default function Home() {
   const [executionType, setExecutionType] = useState<ExecutionType>("SIMULATE_EXECUTION");
   const getTransactionsToDisplay = () => {
     switch (executionType) {
       case "SIMULATE_ASSET_CHANGES": {
-        return mockParams.simulateAssetChanges;
+        return mockSimulateAssetChanges;
       }
       case "SIMULATE_EXECUTION": {
-        return mockParams.simulateExecution;
+        return mockSimulateExecution;
       }
       default: {
         return [];
@@ -30,7 +30,7 @@ export default function Home() {
   const setDataDisplayContent = (data: string) => setDataDisplay(data);
   const setDataDisplayLoading = (v: boolean) => setIsLoading(v);
   const setError = () => setDataDisplayContent("There was an error")
-  const [params, setParams] = useState<TransactionParams>([]);
+  const [params, setParams] = useState<Array<Execution>>([]);
   const [bundle, setBundle] = useState<boolean>(false);
 
   const execute = async () => {
@@ -39,7 +39,7 @@ export default function Home() {
       if (!executionType) {
         throw "Error: Execution Type not set";
       }
-      const prepared = bundle ? prepareBundledParams(executionType, params) : params[0]
+      const prepared: Execution = bundle ? prepareBundledParams(executionType, params) : params[0]
       const response = await executeAlchemyApiWithParams(JSON.stringify(prepared));
       if (response.data) {
         const data = response.data;
@@ -65,7 +65,7 @@ export default function Home() {
   return (
     <main className="flex flex-col h-full">
       <Hero />
-      <div className="flex flex-col items-center gap-6 px-3">
+      <div className="flex flex-col items-center gap-6 px-24">
         <div className="flex flex-row items-center gap-4">
           <InputTypeSelector
             text="Simulate Execution"
@@ -96,7 +96,7 @@ export default function Home() {
           />
         </div>
       </div>
-      <div className="grid grid-rows-3 grid-cols-3 gap-3 m-2 flex-1 overflow-auto px-3">
+      <div className="grid grid-rows-3 grid-cols-3 gap-3 m-2 flex-1 overflow-auto px-24">
         <div className="w-full h-full overflow-auto row-span-2">
           <TransactionSelector
             setParams={setParams}

@@ -1,6 +1,8 @@
 import Button from "@common/components/Button";
 import useTheme, { Theme } from "@common/hooks/useTheme";
 import { useEffect } from "react";
+import Image from "next/image";
+import AlchemyIcon from "public/alchemy.png";
 
 const ThemeButton = ({
   theme,
@@ -34,12 +36,15 @@ const ThemeSwitcher = () => {
         theme={"cupcake"}
         currentTheme={theme}
       />
-      <ThemeButton
-        switchTheme={switchTheme}
-        text="🌳"
-        theme={"forest"}
-        currentTheme={theme}
-      />
+      {/*
+        // @todo @help not sure how to switch brand logo on dark theme
+        <ThemeButton
+          switchTheme={switchTheme}
+          text="🌳"
+          theme={"forest"}
+          currentTheme={theme}
+        />
+      */}
     </div>
   )
 }
@@ -47,11 +52,24 @@ const ThemeSwitcher = () => {
 export default function Navbar() {
 
   return (
-    <div className="navbar font-mono bg-base-200">
-      <div className="flex-1">
-        <a className="btn btn-ghost normal-case text-xl">
-          Alchemy Code Demos ⚡️
-        </a>
+    <div className="navbar font-mono bg-base-200 gap-3 text-xl">
+      <div>
+        {/* Branding */}
+        <Image src={AlchemyIcon} width={120} height={24} alt="Alchemy icon" />
+      </div>
+      <div className="flex-1 flex flex-row gap-3">
+        <div>
+          /
+        </div>
+        <div className="items-center">
+          Code Demos
+        </div>
+        <div>
+          /
+        </div>
+        <div className="">
+          API: Transaction Simulation
+        </div>
       </div>
       <ThemeSwitcher/>
     </div>

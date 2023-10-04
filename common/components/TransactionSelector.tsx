@@ -1,5 +1,5 @@
 import formatWalletAddress from "@common/utils/formatWalletAddress";
-import { TransactionParam, TransactionParams } from "types";
+import { Execution } from "types";
 
 export const TransactionSelector = ({
   setParams,
@@ -8,8 +8,8 @@ export const TransactionSelector = ({
   multiSelect
 }: {
   setParams: (p: any) => void
-  transactions: TransactionParams
-  currentParams: TransactionParams
+  transactions: Array<Execution>
+  currentParams: Array<Execution>
   multiSelect: boolean
 }) => {
   return (
@@ -29,7 +29,7 @@ export const TransactionSelector = ({
                 if (isSelected) {
                   // remove from params
                   setParams((curr: any) => {
-                    return curr.filter((t: TransactionParam) => t !== tx);
+                    return curr.filter((t: Execution) => t !== tx);
                   })
                 } else {
                   // add to params
@@ -44,12 +44,14 @@ export const TransactionSelector = ({
           }
           >
             <div className="card-body text-sm">
-              <p>{tx.method}</p>
               <p>
-                From: {formatWalletAddress(tx.params[0].from)}
+                {tx.txType}
               </p>
               <p>
-                To: {formatWalletAddress(tx.params[0].to)}
+                From: {formatWalletAddress(tx.apiParams.params[0].from)}
+              </p>
+              <p>
+                To: {formatWalletAddress(tx.apiParams.params[0].to)}
               </p>
             </div>
           </div>
