@@ -1,3 +1,4 @@
+import { DEFAULT_DATA_DISPLAY } from "app/page";
 import { ReactNode} from "react";
 
 const MockupCode = ({ children }: { children: ReactNode }) => {
@@ -37,7 +38,7 @@ export const DataDisplay = ({text, loading}: {text: string | null, loading?: boo
   }
   return (
     <MockupCodeComponent>
-      {text || "Simulate a transaction to begin"}
+      {text || DEFAULT_DATA_DISPLAY}
     </MockupCodeComponent>
   )
 }

@@ -13,7 +13,8 @@ type TransactionParam = {
   method: ApiMethod,
   params: Array <Transaction>
 }
-
+// @todo add more
+export type AlchemyApiResponse = AssetChangesResponse;
 type AssetChangesResponse = {
   jsonrpc: string,
   id: number,
@@ -42,7 +43,7 @@ type AssetChangesResponse = {
 export type Execution = {
   apiParams: TransactionParam,
   response: {
-    data: AssetChangesResponse
+    data: AlchemyApiResponse
   },
   // @todo refer etherscan
   txType: "Transer" | "Contract Call"
