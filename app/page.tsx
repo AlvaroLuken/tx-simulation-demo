@@ -3,14 +3,13 @@ import Hero from "@common/hero/Hero";
 import "./globals.css";
 import { useState } from "react";
 import { executeAlchemyApiWithParams } from "@common/utils/alchemy";
-import { TransactionParam, mockParams } from "@common/utils/mocks";
+import { TransactionParams, mockParams, prepareBundledParams } from "@common/utils/mocks";
 import Button from "@common/components/Button";
 import { DataDisplay } from "@common/components/MockupCode";
 import { InputTypeSelector } from "@common/components/InputTypeSelector";
 import { TransactionSelector } from "@common/components/TransactionSelector";
 
-const DEFUALT_PARAMS = mockParams.simulateAssetChanges[0];
-type ExecutionType = "SIMULATE_EXECUTION" | "SIMULATE_ASSET_CHANGES";
+export type ExecutionType = "SIMULATE_EXECUTION" | "SIMULATE_ASSET_CHANGES";
 export default function Home() {
   const [executionType, setExecutionType] = useState<ExecutionType>("SIMULATE_EXECUTION");
 
@@ -34,12 +33,12 @@ export default function Home() {
   const setDataDisplayLoading = (v: boolean) => setIsLoading(v);
   const setError = () => setDataDisplayContent("There was an error")
 
-  const [params, setParams] = useState<TransactionParam>(DEFUALT_PARAMS);
+  const [params, setParams] = useState<TransactionParams>([]);
   const [bundle, setBundle] = useState<boolean>(false);
-
   const execute = async () => {
     setDataDisplayLoading(true)
-    const response = await executeAlchemyApiWithParams(JSON.stringify(params))
+    const prepared = bundle ? prepareBundledParams(executionType, params) : params[0]
+    const response = await executeAlchemyApiWithParams(JSON.stringify(prepared));
     if (response.data) {
       const data = response.data;
       setDataDisplayContent(JSON.stringify(data, undefined, 2));
@@ -89,6 +88,7 @@ export default function Home() {
             setParams={setParams}
             transactions={getTransactionsToDisplay()}
             currentParams={params}
+            multiSelect={bundle}
           />
         </div>
         <div className="col-span-2 row-span-2">

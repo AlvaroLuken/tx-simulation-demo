@@ -4,11 +4,13 @@ import { TransactionParam, TransactionParams } from "@common/utils/mocks";
 export const TransactionSelector = ({
   setParams,
   transactions,
-  currentParams
+  currentParams,
+  multiSelect
 }: {
   setParams: (p: any) => void
   transactions: TransactionParams
-  currentParams: TransactionParam
+  currentParams: TransactionParams
+  multiSelect: boolean
 }) => {
   return (
     <>
@@ -17,11 +19,29 @@ export const TransactionSelector = ({
         return (
           <div
             className={`
-              card w-full border-2 border-primary mb-3 hover:bg-base-300 hover:border-primary-focus cursor-pointer
-              ${currentParams === tx ? "bg-accent" : "bg-base-200"}
+              card w-full border-2 border-primary-focus mb-3 cursor-pointer
+              ${currentParams.find(t => t === tx) ? "bg-accent" : "bg-base-200 hover:bg-base-300"}
             `}
             key={key}
-            onClick={() => setParams(tx)}
+            onClick={() => {
+              const isSelected = currentParams.find(t => t === tx)
+              if (multiSelect) {
+                if (isSelected) {
+                  // remove from params
+                  setParams((curr: any) => {
+                    return curr.filter((t: TransactionParam) => t !== tx);
+                  })
+                } else {
+                  // add to params
+                  setParams((curr: any) => {
+                    return [...curr, tx]
+                  })
+                }
+              } else {
+                return setParams([tx]);
+              }
+            }
+          }
           >
             <div className="card-body text-sm">
               <p>{tx.method}</p>

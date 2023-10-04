@@ -1,14 +1,18 @@
+import { ExecutionType } from "app/page"
+
+export type Transaction = {
+  from: string,
+  to: string,
+  value: string,
+  data: string
+}
+
 export type TransactionParam = {
   id: number,
   jsonrpc: string,
   method: string,
-  params: Array <{
-    from: string,
-    to: string,
-    value: string,
-    data: string
-  }>
- }
+  params: Array <Transaction>
+}
 export type TransactionParams  = Array<TransactionParam>
 
 export type AssetChangesResponse = {
@@ -211,6 +215,34 @@ const mockSimulateExecutionResponse: AssetChangesResponse = {
 export const mockParams = {
   simulateExecution: mockSimulateExecution,
   simulateAssetChanges: mockSimulateAssetChanges
+}
+
+export const prepareBundledParams = (type: ExecutionType, selectedParams: TransactionParams) => {
+  let method;
+  switch (type) {
+    case "SIMULATE_ASSET_CHANGES": {
+      method = "alchemy_simulateAssetChangesBundle";
+    }
+    break;
+    case "SIMULATE_EXECUTION": {
+      method = "alchemy_simulateExecutionBundle";
+    }
+    break;
+  }
+  let bundled = {
+    id: 1,
+    method,
+    jsonrpc: "2.0",
+    params: []
+  };
+  for (let i = 0; i < selectedParams.length; i++) {
+    const params = [...bundled.params, [selectedParams[i].params]];
+    Object.assign(bundled, {
+      ...bundled,
+      params
+    })
+  }
+  return bundled;
 }
 
 export const mockResponse = {
