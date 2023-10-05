@@ -1,9 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-export type Theme = "dark" | "retro" | "cupcake" | "corporate" | "forest" | "bumblebee" | "synthwave" | "night";
-const DEFAULT_THEME: Theme = "bumblebee";
+export const DarkTheme = ["dark", "forest", "synthwave", "night"] as const;
+export const LightTheme = ["retro", "cupcake", "corporate", "bumblebee"] as const;
+export const Themes = [...DarkTheme, ...LightTheme] as const;
+
+type DarkTheme = typeof DarkTheme[number];
+type LightTheme = typeof LightTheme[number];
+
+export type Theme = typeof Themes[number];
+const DEFAULT_THEME: Theme = "dark";
 
 export default function useTheme () {
   const [theme, switchTheme] = useState<Theme>(DEFAULT_THEME);
-  return {theme, switchTheme};
+  const [isDark, setIsDark] = useState<boolean>(false);
+  useEffect(() => {
+    if (DarkTheme.find(th => th === theme)) {
+      return setIsDark(true)
+    }
+    return setIsDark(false);
+  }, [theme])
+  return {theme, switchTheme, isDark};
 }
