@@ -46,5 +46,5 @@ export type Execution = {
     data: AlchemyApiResponse
   },
   // @todo refer etherscan
-  txType: "Transer" | "Contract Call"
+  txType: "Transfer" | "Contract Call"
 }
