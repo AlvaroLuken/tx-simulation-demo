@@ -1,6 +1,26 @@
-import Button from "@common/Button";
-import useTheme from "@common/hooks/useTheme";
+import Button from "@common/components/Button";
+import useTheme, { Theme } from "@common/hooks/useTheme";
 import { useEffect } from "react";
+import Image from "next/image";
+import AlchemyIcon from "public/alchemy.png";
+
+const ThemeButton = ({
+  theme,
+  switchTheme,
+  currentTheme,
+  text
+}: {
+  theme: Theme,
+  switchTheme: (theme: Theme) => void,
+  currentTheme: Theme,
+  text: string
+}) => {
+  return (
+    <Button onClick={() => switchTheme(theme)} styles={`btn-neutral btn-sm ${currentTheme === theme ? `` : `btn-outline`}`}>
+      {text}
+    </Button>
+  )
+}
 
 const ThemeSwitcher = () => {
   const {theme, switchTheme} = useTheme();
@@ -10,15 +30,21 @@ const ThemeSwitcher = () => {
 
   return (
     <div className="flex flex-row gap-3">
-      <Button onClick={() => switchTheme("cupcake")} classNames={`btn-neutral btn-sm ${theme === "cupcake" ? `` : `btn-outline`}`}>
-        🧁
-      </Button>
-      <Button onClick={() => switchTheme("dark")} classNames={`btn-neutral btn-sm ${theme === "dark" ? `` : `btn-outline`}`}>
-        🌕
-      </Button>
-      <Button onClick={() => switchTheme("forest")} classNames={`btn-neutral btn-sm ${theme === "forest" ? `` : `btn-outline`}`}>
-        🌳
-      </Button>
+      <ThemeButton
+        switchTheme={switchTheme}
+        text="🐝"
+        theme={"bumblebee"}
+        currentTheme={theme}
+      />
+      {/*
+        // @todo @help not sure how to switch brand logo on dark theme
+        <ThemeButton
+          switchTheme={switchTheme}
+          text="🌳"
+          theme={"forest"}
+          currentTheme={theme}
+        />
+      */}
     </div>
   )
 }
@@ -26,11 +52,24 @@ const ThemeSwitcher = () => {
 export default function Navbar() {
 
   return (
-    <div className="navbar font-mono bg-base-200">
-      <div className="flex-1">
-        <a className="btn btn-ghost normal-case text-xl">
-          Alchemy Code Demos ⚡️
-        </a>
+    <div className="navbar font-mono bg-base-200 gap-3 text-xl">
+      <div>
+        {/* Branding */}
+        <Image src={AlchemyIcon} width={120} height={24} alt="Alchemy icon" />
+      </div>
+      <div className="flex-1 flex flex-row gap-3">
+        <div>
+          /
+        </div>
+        <div className="items-center">
+          Code Demos
+        </div>
+        <div>
+          /
+        </div>
+        <div className="">
+          API: Transaction Simulation
+        </div>
       </div>
       <ThemeSwitcher/>
     </div>
