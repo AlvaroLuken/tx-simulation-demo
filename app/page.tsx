@@ -10,8 +10,7 @@ import { InputTypeSelector } from "@common/components/InputTypeSelector";
 import { TransactionSelector } from "@common/components/TransactionSelector";
 import { mockSimulateAssetChanges, mockSimulateExecution } from "@common/utils/mocks";
 import formatResponse from "@common/utils/formatResponse";
-
-export const DEFAULT_DATA_DISPLAY = "Click on the buttons to simulate a transaction"
+import { DEFAULT_DATA_DISPLAY } from "@common/utils/constants";
 
 export default function Home() {
   const [executionType, setExecutionType] = useState<ExecutionType>("SIMULATE_EXECUTION");

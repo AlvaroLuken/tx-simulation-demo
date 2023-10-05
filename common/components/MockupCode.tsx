@@ -1,4 +1,4 @@
-import { DEFAULT_DATA_DISPLAY } from "app/page";
+import { DEFAULT_DATA_DISPLAY } from "@common/utils/constants";
 import { ReactNode} from "react";
 
 const MockupCode = ({ children }: { children: ReactNode }) => {
