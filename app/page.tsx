@@ -108,9 +108,9 @@ export default function Home() {
               styles="checkbox checkbox-secondary"
             />
           </div>
-          <div className="tooltip tooltip-warning" data-tip="View the JSON!">
+          <div className="tooltip tooltip-warning" data-tip="Switch to 🤓 to view the JSON!">
             <InputTypeSelector
-              text="Nerd mode"
+              text="💅"
               rightText="🤓"
               onChecked={setNerdMode}
               value={true}
