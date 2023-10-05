@@ -40,42 +40,38 @@ type AssetChangesResponse = {
   }
 }
 
-type DecodedCall = {
+type DecodedCallOrEvent = {
   decoded: {
     authority: "ETHERSCAN",
-    methodName: string,
-    inputs: [
-      {
-        name: string,
-        value: string,
-        type: string
-      },
-    ],
-    outputs: []
+    methodName?: string,
+    eventName?: string,
+    inputs: Array<{
+      name: string,
+      value: string,
+      type: string,
+      indexed?: boolean
+    }>,
+    outputs?: []
   },
-  type: "CALL",
-  from: string,
-  to: string,
-  value: string,
-  gas: string,
-  gasUsed: string,
-  input: string,
-  output: string
+  type?: "CALL",
+  from?: string,
+  to?: string,
+  value?: string,
+  gas?: string,
+  gasUsed?: string,
+  input?: string,
+  output?: string,
+  address?: string,
+  data?: string,
+  topics?: Array<string>
 }
 
 type SimulateExecutionResponse = {
   jsonrpc: string,
   id: number,
   result: {
-    calls: Array<DecodedCall>,
-    logs: [
-      {
-        decoded: DecodedCall,
-        address: "0xdac17f958d2ee523a2206206994597c13d831ec7",
-        data: "0x0000000000000000000000000000000000000000000000000000000077359400",
-        topics: Array<string>
-      }
-    ]
+    calls: Array<DecodedCallOrEvent>,
+    logs: Array<DecodedCallOrEvent>
   }
 }
 
