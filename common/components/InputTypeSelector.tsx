@@ -7,7 +7,8 @@ export const InputTypeSelector = ({
   checked,
   name,
   type,
-  styles
+  styles,
+  rightText
 }: {
   text: string,
   value: string | boolean,
@@ -16,6 +17,7 @@ export const InputTypeSelector = ({
   name: string
   type: HTMLInputTypeAttribute
   styles: string
+  rightText?: string
 }) => {
   return (
     <div className="form-control">
@@ -30,6 +32,12 @@ export const InputTypeSelector = ({
           onChange={type === "radio" ? (change) => onChecked(value): (change) => onChecked(change.target.checked)}
           checked={checked}
         />
+        {
+          rightText &&
+            <span className="label-text">
+              {rightText}
+            </span>
+        }
       </label>
     </div>
   )

@@ -109,7 +109,8 @@ export default function Home() {
             />
           </div>
           <InputTypeSelector
-            text="Nerd Mode"
+            text="💅"
+            rightText="🤓"
             onChecked={setNerdMode}
             value={true}
             checked={nerdMode}
