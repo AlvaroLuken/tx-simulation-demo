@@ -36,13 +36,16 @@ export default function Home() {
   const [nerdMode, setNerdMode] = useState<boolean>(false);
   const [executionResponse, setExecutionResponse] = useState<AlchemyApiResponse>();
   const execute = async () => {
+    if (params.length < 1) {
+      return setDataDisplay("No transactions selected. Please select a transaction on the left and click Execute");
+    }
     setDataDisplayLoading(true)
     try {
       if (!executionType) {
         throw "Error: Execution Type not set";
       }
       const prepared: Execution = bundle ? prepareBundledParams(executionType, params) : params[0]
-      const response = await executeAlchemyApiWithParams(JSON.stringify(prepared));
+      const response = await executeAlchemyApiWithParams(JSON.stringify(prepared.apiParams));
       if (response.data) {
         const data = response.data as AlchemyApiResponse;
         setExecutionResponse(data);

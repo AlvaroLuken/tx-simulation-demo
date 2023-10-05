@@ -14,7 +14,7 @@ export const mockSimulateAssetChanges: Array<Execution> = [
         },
       ]
     },
-    txType: "Transer",
+    txType: "Transfer",
     response: {
       data: {
         jsonrpc: "2.0",
@@ -56,7 +56,7 @@ export const mockSimulateAssetChanges: Array<Execution> = [
         },
       ]
     },
-    txType: "Transer",
+    txType: "Transfer",
     response: {
       data: {
         jsonrpc: "2.0",
@@ -98,7 +98,7 @@ export const mockSimulateAssetChanges: Array<Execution> = [
         },
       ]
     },
-    txType: "Transer",
+    txType: "Transfer",
     response: {
       data: {
         jsonrpc: "2.0",
