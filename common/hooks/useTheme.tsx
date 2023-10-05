@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export type Theme = "dark" | "retro" | "cupcake" | "corporate" | "forest" | "bumblebee" | "synthwave";
+export type Theme = "dark" | "retro" | "cupcake" | "corporate" | "forest" | "bumblebee" | "synthwave" | "night";
 const DEFAULT_THEME: Theme = "bumblebee";
 
 export default function useTheme () {

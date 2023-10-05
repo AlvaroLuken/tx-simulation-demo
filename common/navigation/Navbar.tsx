@@ -32,8 +32,14 @@ const ThemeSwitcher = () => {
     <div className="flex flex-row gap-3">
       <ThemeButton
         switchTheme={switchTheme}
-        text="🐝"
+        text="🔆"
         theme={"bumblebee"}
+        currentTheme={theme}
+      />
+      <ThemeButton
+        switchTheme={switchTheme}
+        text="🌚"
+        theme={"night"}
         currentTheme={theme}
       />
       {/*
