@@ -11,7 +11,5 @@ export default function formatResponse (response: AlchemyApiResponse | undefined
   }
 
   // non nerd mode response
-  return JSON.stringify({
-   changes: response.result
-  }, undefined, 2)
+  return JSON.stringify(response.result, undefined, 2)
 }
