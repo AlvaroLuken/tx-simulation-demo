@@ -108,16 +108,18 @@ export default function Home() {
               styles="checkbox checkbox-secondary"
             />
           </div>
-          <InputTypeSelector
-            text="💅"
-            rightText="🤓"
-            onChecked={setNerdMode}
-            value={true}
-            checked={nerdMode}
-            name="nerdMode-selector"
-            type="checkbox"
-            styles="toggle toggle-secondary"
-          />
+          <div className="tooltip tooltip-warning" data-tip="View the JSON!">
+            <InputTypeSelector
+              text="Nerd mode"
+              rightText="🤓"
+              onChecked={setNerdMode}
+              value={true}
+              checked={nerdMode}
+              name="nerdMode-selector"
+              type="checkbox"
+              styles="toggle toggle-secondary"
+            />
+          </div>
         </div>
 
       </div>
