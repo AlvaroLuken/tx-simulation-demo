@@ -4,10 +4,14 @@ export default function formatResponse (response: AlchemyApiResponse | undefined
   if (!response) {
     return "";
   }
+
+  // if nerd mode is on, display the json as is
   if (nerdMode) {
     return JSON.stringify(response, undefined, 2);
   }
+
+  // non nerd mode response
   return JSON.stringify({
-   changes: response.result.changes
+   changes: response.result
   }, undefined, 2)
 }
