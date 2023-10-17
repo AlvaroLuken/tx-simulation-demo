@@ -9,7 +9,7 @@ import { DataDisplay } from "@common/components/MockupCode";
 import { InputTypeSelector } from "@common/components/InputTypeSelector";
 import { TransactionSelector } from "@common/components/TransactionSelector";
 import { mockSimulateAssetChanges, mockSimulateExecution } from "@common/utils/mocks";
-import formatResponse from "@common/utils/formatResponse";
+import { formatResponse, formatParams } from "@common/utils/formatResponse";
 import { DEFAULT_DATA_DISPLAY } from "@common/utils/constants";
 
 export default function Home() {
@@ -28,10 +28,11 @@ export default function Home() {
     }
   }
   const [dataDisplay, setDataDisplay] = useState<string | null>(DEFAULT_DATA_DISPLAY);
+  const [params, setParams] = useState<Array<Execution>>([]);
+  const [paramsDisplay, setParamsDisplay] = useState<string | null>(JSON.stringify(params, undefined, 2));
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const setDataDisplayLoading = (v: boolean) => setIsLoading(v);
   const setError = () => setDataDisplay("There was an error")
-  const [params, setParams] = useState<Array<Execution>>([]);
   const [bundle, setBundle] = useState<boolean>(false);
   const [nerdMode, setNerdMode] = useState<boolean>(false);
   const [executionResponse, setExecutionResponse] = useState<AlchemyApiResponse>();
@@ -70,9 +71,11 @@ export default function Home() {
   }, [bundle, executionType]);
   useEffect(() => {
     reset();
+    setParamsDisplay(formatParams(params, nerdMode));
   }, [params] )
   useEffect(() => {
-    setDataDisplay(formatResponse(executionResponse, nerdMode))
+    setDataDisplay(formatResponse(executionResponse, nerdMode));
+    setParamsDisplay(formatParams(params, nerdMode));
   }, [nerdMode]);
   return (
     <main className="flex flex-col h-full">
@@ -121,10 +124,9 @@ export default function Home() {
             />
           </div>
         </div>
-
       </div>
-      <div className="grid grid-rows-3 grid-cols-3 gap-3 m-2 flex-1 overflow-auto px-24">
-        <div className="w-full h-full overflow-auto row-span-2">
+      <div className="grid grid-cols-4 grid-rows-4 gap-3 m-2 flex-1 overflow-auto px-24">
+        <div className="w-full h-full col-span-4 overflow-auto">
           <TransactionSelector
             setParams={setParams}
             transactions={getTransactionsToDisplay()}
@@ -133,9 +135,12 @@ export default function Home() {
           />
         </div>
         <div className="col-span-2 row-span-2">
+          <DataDisplay text={paramsDisplay} />
+        </div>
+        <div className="col-span-2 row-span-2">
           <DataDisplay text={dataDisplay} loading={isLoading} />
         </div>
-        <div className="col-span-3 flex flex-col items-center">
+        <div className="col-span-4 flex flex-col items-center">
           <Button onClick={execute} styles="btn-lg">
             Execute
           </Button>

@@ -13,13 +13,13 @@ export const TransactionSelector = ({
   multiSelect: boolean
 }) => {
   return (
-    <>
+    <div className="flex flex-row gap-3">
     {
       transactions.map((tx, key) => {
         return (
           <div
             className={`
-              card w-full border-2 border-primary-focus mb-3 cursor-pointer
+              card border-2 border-primary-focus mb-3 cursor-pointer w-content
               ${currentParams.find(t => t === tx) ? "bg-accent" : "bg-base-200 hover:bg-base-300"}
             `}
             key={key}
@@ -58,6 +58,6 @@ export const TransactionSelector = ({
         )
       })
     }
-    </>
+    </div>
   )
 }
