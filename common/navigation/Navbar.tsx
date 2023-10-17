@@ -43,7 +43,7 @@ const ThemeSwitcher = ({
       <ThemeButton
         switchTheme={switchTheme}
         text="🌚"
-        theme={"night"}
+        theme={"business"}
         currentTheme={theme}
       />
     </div>

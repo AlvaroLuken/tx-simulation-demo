@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export const DarkTheme = ["dark", "forest", "synthwave", "night"] as const;
+export const DarkTheme = ["business", "forest", "synthwave", "night"] as const;
 export const LightTheme = ["retro", "cupcake", "corporate", "bumblebee"] as const;
 export const Themes = [...DarkTheme, ...LightTheme] as const;
 
@@ -8,7 +8,7 @@ type DarkTheme = typeof DarkTheme[number];
 type LightTheme = typeof LightTheme[number];
 
 export type Theme = typeof Themes[number];
-const DEFAULT_THEME: Theme = "dark";
+const DEFAULT_THEME: Theme = "business";
 
 export default function useTheme () {
   const [theme, switchTheme] = useState<Theme>(DEFAULT_THEME);
