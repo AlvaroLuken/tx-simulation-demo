@@ -8,7 +8,7 @@ type DarkTheme = typeof DarkTheme[number];
 type LightTheme = typeof LightTheme[number];
 
 export type Theme = typeof Themes[number];
-const DEFAULT_THEME: Theme = "business";
+const DEFAULT_THEME: Theme = "bumblebee";
 
 export default function useTheme () {
   const [theme, switchTheme] = useState<Theme>(DEFAULT_THEME);
