@@ -1,14 +1,9 @@
 import axios from "axios";
 import { ALCHEMY_ENDPOINT } from "./constants";
-import isDev from "./isDev";
 import { ApiMethod, Execution } from "types";
 import { ExecutionType } from "types";
 
 export const executeAlchemyApiWithParams = (params: string) => {
-  if (isDev) {
-    const parsedParams = JSON.parse(params) as Execution;
-    return parsedParams.response;
-  }
   return axios.post(ALCHEMY_ENDPOINT, params, {
     headers: { "Content-Type": "application/json", "Accept": "application/json" },
   })
