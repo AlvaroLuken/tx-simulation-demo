@@ -28,12 +28,16 @@ export const TransactionSelector = ({
               if (multiSelect) {
                 if (isSelected) {
                   // remove from params
-                  setParams((curr: any) => {
+                  return setParams((curr: any) => {
                     return curr.filter((t: Execution) => t !== tx);
                   })
                 } else {
+                  // if 3 already selected, and now selecting the 4th one
+                  if (currentParams.length === 3) {
+                    return setParams([tx]);
+                  }
                   // add to params
-                  setParams((curr: any) => {
+                  return setParams((curr: any) => {
                     return [...curr, tx]
                   })
                 }

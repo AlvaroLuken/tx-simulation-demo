@@ -1,5 +1,4 @@
 "use client";
-import Hero from "@common/hero/Hero";
 import "./globals.css";
 import { useEffect, useState } from "react";
 import { executeAlchemyApiWithParams, prepareBundledParams } from "@common/utils/alchemy";
@@ -10,7 +9,7 @@ import { InputTypeSelector } from "@common/components/InputTypeSelector";
 import { TransactionSelector } from "@common/components/TransactionSelector";
 import { mockSimulateAssetChanges, mockSimulateExecution } from "@common/utils/mocks";
 import { formatResponse, formatParams } from "@common/utils/formatResponse";
-import { DEFAULT_DATA_DISPLAY } from "@common/utils/constants";
+import { DEFAULT_DATA_DISPLAY, HELP_TEXTS } from "@common/utils/constants";
 
 export default function Home() {
   const [executionType, setExecutionType] = useState<ExecutionType>("SIMULATE_EXECUTION");
@@ -36,6 +35,12 @@ export default function Home() {
   const [bundle, setBundle] = useState<boolean>(false);
   const [nerdMode, setNerdMode] = useState<boolean>(false);
   const [executionResponse, setExecutionResponse] = useState<AlchemyApiResponse>();
+  const [expandHelpText, setExpandHelpText] = useState<boolean>(false);
+  const [helpText, setHelpText] = useState<{
+    title: string,
+    text: string
+  }>(HELP_TEXTS.DEFAULT)
+
   const execute = async () => {
     if (params.length < 1) {
       return setDataDisplay("No transactions selected. Please select a transaction on the left and click Execute");
@@ -65,6 +70,8 @@ export default function Home() {
     setDataDisplay(DEFAULT_DATA_DISPLAY);
     setIsLoading(false);
   }
+
+
   useEffect(() => {
     reset();
     setParams([]);
@@ -77,10 +84,26 @@ export default function Home() {
     setDataDisplay(formatResponse(executionResponse, nerdMode));
     setParamsDisplay(formatParams(params, nerdMode));
   }, [nerdMode]);
+  useEffect(() => {
+    console.log({bundle, executionType});
+    if (bundle && executionType === "SIMULATE_ASSET_CHANGES") {
+      return setHelpText(HELP_TEXTS.BUNDLE_ASSET);
+    }
+    if (bundle && executionType === "SIMULATE_EXECUTION") {
+      return setHelpText(HELP_TEXTS.BUNDLE_SIMULATION);
+    }
+    if (executionType === "SIMULATE_ASSET_CHANGES") {
+      console.log("setting help text");
+      return setHelpText(HELP_TEXTS.ASSET_CHANGES);
+    }
+    if (executionType === "SIMULATE_EXECUTION") {
+      return setHelpText(HELP_TEXTS.SIMULATE_EXECUTION);
+    }
+  }, [bundle,executionType])
+
   return (
     <main className="flex flex-col h-full">
-      <Hero />
-      <div className="flex flex-col items-center gap-6 px-24">
+      <div className="flex flex-col items-center gap-6 px-24 mt-12">
         <div className="flex flex-row items-center justify-between w-full">
           <div className="flex flex-row items-center gap-4">
             <InputTypeSelector
@@ -124,7 +147,19 @@ export default function Home() {
             />
           </div>
         </div>
+
+        <div className="collapse bg-base-200 cursor-pointer w-full" onClick={() => setExpandHelpText(curr => !curr)}>
+          <input type="radio" name="my-accordion-1" checked={expandHelpText} />
+          <div className="collapse-title text-lg font-medium">
+            {helpText.title}
+          </div>
+          <div className="collapse-content">
+            <p>{helpText.text}</p>
+          </div>
+        </div>
+
       </div>
+
       <div className="grid grid-cols-4 grid-rows-4 gap-3 m-2 flex-1 overflow-auto px-24">
         <div className="w-full h-full col-span-4 overflow-auto">
           <TransactionSelector
