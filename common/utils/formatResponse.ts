@@ -7,8 +7,9 @@ const parseResponseToNaturalLanguage = (result: AlchemyApiResponse["result"]) =>
 }
 
 // @todo @anggxyz
-const parseParamsToNaturalLanguage = (params: Array<Execution["apiParams"]>) => {
-  return JSON.stringify(params, undefined, 2);
+const parseParamsToNaturalLanguage = (params: Array<Execution>) => {
+  const naturalLanguage = params.map(p => p.naturalLanguage);
+  return JSON.stringify(naturalLanguage, null, 4);
 }
 
 export function formatResponse (response: AlchemyApiResponse | undefined, nerdMode: boolean): string {
@@ -32,8 +33,8 @@ export function formatParams (params: Array<Execution> | undefined, nerdMode: bo
   // if nerd mode is on, display the json as is
   const apiParams = params.map(p => p.apiParams);
   if (nerdMode) {
-    return JSON.stringify(params, undefined, 2);
+    return JSON.stringify(apiParams, undefined, 2);
   }
   // pretty mode response
-  return parseParamsToNaturalLanguage(apiParams);
+  return parseParamsToNaturalLanguage(params);
 }

@@ -83,9 +83,10 @@ type BundledExecutionResponse = {
 
 export type Execution = {
   apiParams: TransactionParam,
-  response: {
+  response?: {
     data: AlchemyApiResponse
   },
   // @todo refer etherscan
-  txType: "Transfer" | "Contract Call"
+  txType: string,
+  naturalLanguage: string
 }

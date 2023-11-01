@@ -81,11 +81,11 @@ export default function Home() {
     setParamsDisplay(formatParams(params, nerdMode));
   }, [params] )
   useEffect(() => {
-    setDataDisplay(formatResponse(executionResponse, nerdMode));
+    // @dev @note do nothing on the response side when nerd mode is switched
+    // setDataDisplay(formatResponse(executionResponse, nerdMode));
     setParamsDisplay(formatParams(params, nerdMode));
   }, [nerdMode]);
   useEffect(() => {
-    console.log({bundle, executionType});
     if (bundle && executionType === "SIMULATE_ASSET_CHANGES") {
       return setHelpText(HELP_TEXTS.BUNDLE_ASSET);
     }
@@ -93,7 +93,6 @@ export default function Home() {
       return setHelpText(HELP_TEXTS.BUNDLE_SIMULATION);
     }
     if (executionType === "SIMULATE_ASSET_CHANGES") {
-      console.log("setting help text");
       return setHelpText(HELP_TEXTS.ASSET_CHANGES);
     }
     if (executionType === "SIMULATE_EXECUTION") {
@@ -134,20 +133,7 @@ export default function Home() {
               styles="checkbox checkbox-secondary"
             />
           </div>
-          <div className="tooltip tooltip-warning" data-tip="Switch to 🤓 to view the JSON!">
-            <InputTypeSelector
-              text="💅"
-              rightText="🤓"
-              onChecked={setNerdMode}
-              value={true}
-              checked={nerdMode}
-              name="nerdMode-selector"
-              type="checkbox"
-              styles="toggle toggle-secondary"
-            />
-          </div>
         </div>
-
         <div className="collapse bg-base-200 cursor-pointer w-full" onClick={() => setExpandHelpText(curr => !curr)}>
           <input type="radio" name="my-accordion-1" checked={expandHelpText} />
           <div className="collapse-title text-lg font-medium">
@@ -157,7 +143,6 @@ export default function Home() {
             <p>{helpText.text}</p>
           </div>
         </div>
-
       </div>
 
       <div className="grid grid-cols-4 grid-rows-4 gap-3 m-2 flex-1 overflow-auto px-24">
@@ -170,10 +155,38 @@ export default function Home() {
           />
         </div>
         <div className="col-span-2 row-span-2">
+          <div className="flex flex-col h-full">
+            <div className="flex flex-row justify-between px-2">
+              <div>
+              Parameters being sent
+              </div>
+              <div>
+              <div className="tooltip tooltip-warning" data-tip="Switch to 🤓 to view the JSON!">
+                <InputTypeSelector
+                  text="💅"
+                  rightText="🤓"
+                  onChecked={setNerdMode}
+                  value={true}
+                  checked={nerdMode}
+                  name="nerdMode-selector"
+                  type="checkbox"
+                  styles="toggle toggle-secondary"
+                />
+              </div>
+              </div>
+            </div>
           <DataDisplay text={paramsDisplay} />
+          </div>
         </div>
         <div className="col-span-2 row-span-2">
-          <DataDisplay text={dataDisplay} loading={isLoading} />
+          <div className="flex flex-col h-full">
+            <div className="flex flex-row justify-between pb-[1rem] px-2">
+              <div>
+                Returned parameters
+              </div>
+            </div>
+            <DataDisplay text={dataDisplay} loading={isLoading} />
+          </div>
         </div>
         <div className="col-span-4 flex flex-col items-center">
           <Button onClick={execute} styles="btn-lg">

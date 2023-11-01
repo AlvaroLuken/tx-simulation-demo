@@ -21,7 +21,8 @@ const MockupCodeComponent = ({ children, center = false }: { children: ReactNode
   }
   return (
     <MockupCode>
-      <pre>
+      <pre className="whitespace-pre-wrap px-3">
+        <br />
         {children}
       </pre>
     </MockupCode>
@@ -37,8 +38,6 @@ export const DataDisplay = ({text, loading}: {text: string | null, loading?: boo
     )
   }
   return (
-    <MockupCodeComponent>
-      {text || DEFAULT_DATA_DISPLAY}
-    </MockupCodeComponent>
+    <MockupCodeComponent>{text || DEFAULT_DATA_DISPLAY}</MockupCodeComponent>
   )
 }
