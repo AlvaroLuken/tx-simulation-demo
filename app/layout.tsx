@@ -11,7 +11,7 @@ export default function RootLayout({
   const {theme} = useTheme();
   return (
     <html data-theme={theme}>
-      <body className="h-screen">
+      <body>
         <Navbar />
         {children}
       </body>
