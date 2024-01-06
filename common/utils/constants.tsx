@@ -12,18 +12,18 @@
    },
   BUNDLE_SIMULATION: {
     text: `This method allows you to simulate multiple transactions sequentially. Limited to 3 transactions. 4500 CU cost.`,
-    title: `method: alchemy_simulateExecutionBundle`
+    title: `alchemy_simulateExecutionBundle`
   },
   BUNDLE_ASSET: {
     text: `This method allows you to simulate multiple transactions sequentially. Limited to 3 transactions. 4500 CU cost.`,
-    title: `method: alchemy_simulateAssetChangesBundle`
+    title: `alchemy_simulateAssetChangesBundle`
   },
   SIMULATE_EXECUTION: {
     text: `Simulates a transaction and returns decoded execution traces and decoded logs.`,
-    title: `method: alchemy_simulateExecution`
+    title: `alchemy_simulateExecution`
   },
   ASSET_CHANGES: {
     text: `Simulates a transaction and returns an array of all the asset related changes that this transcation would create`,
-    title: `method: alchemy_simulateAssetChanges`
+    title: `alchemy_simulateAssetChanges`
   }
  }

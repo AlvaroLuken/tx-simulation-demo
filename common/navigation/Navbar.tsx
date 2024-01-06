@@ -73,11 +73,13 @@ export default function Navbar() {
         <div>
           /
         </div>
-        <div>
-          API: Transaction Simulation
+        <div className="border-dashed border-black border-b-2">
+          <a href="https://docs.alchemy.com/reference/simulation" target="_blank">
+            API: Transaction Simulation ↗️
+          </a>
         </div>
       </div>
-      <ThemeSwitcher theme={theme} switchTheme={switchTheme} />
+      {/* <ThemeSwitcher theme={theme} switchTheme={switchTheme} /> */}
     </div>
   );
 }

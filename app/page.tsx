@@ -41,7 +41,7 @@ export default function Home() {
     text: string
   }>(HELP_TEXTS.DEFAULT)
 
-  const execute = async () => {
+  const simulate = async () => {
     if (params.length < 1) {
       return setDataDisplay("No transactions selected. Please select a transaction on the left and click Execute");
     }
@@ -102,9 +102,18 @@ export default function Home() {
 
   return (
     <main className="flex flex-col h-full">
-      <div className="flex flex-col items-center gap-6 px-24 mt-12">
+      <div className="flex flex-col items-center gap-6 px-24 mt-6">
+      <div className="collapse bg-base-200 cursor-pointer w-full rounded-lg" onClick={() => setExpandHelpText(curr => !curr)}>
+          <input type="radio" name="my-accordion-1" checked={expandHelpText} />
+          <div className="collapse-title text-lg font-medium">
+            {helpText.title}
+          </div>
+          <div className="collapse-content">
+            <p>{helpText.text}</p>
+          </div>
+        </div>
         <div className="flex flex-row items-center justify-between w-full">
-          <div className="flex flex-row items-center gap-4">
+            <div className="flex flex-row items-center gap-4">
             <InputTypeSelector
               text="Simulate Execution"
               onChecked={setExecutionType}
@@ -123,7 +132,7 @@ export default function Home() {
               type="radio"
               styles="radio radio-primary"
             />
-            <InputTypeSelector
+              <InputTypeSelector
               text="Bundle Execution"
               onChecked={setBundle}
               value={true}
@@ -132,16 +141,8 @@ export default function Home() {
               type="checkbox"
               styles="checkbox checkbox-secondary"
             />
-          </div>
-        </div>
-        <div className="collapse bg-base-200 cursor-pointer w-full" onClick={() => setExpandHelpText(curr => !curr)}>
-          <input type="radio" name="my-accordion-1" checked={expandHelpText} />
-          <div className="collapse-title text-lg font-medium">
-            {helpText.title}
-          </div>
-          <div className="collapse-content">
-            <p>{helpText.text}</p>
-          </div>
+            </div>
+
         </div>
       </div>
 
@@ -189,8 +190,8 @@ export default function Home() {
           </div>
         </div>
         <div className="col-span-4 flex flex-col items-center">
-          <Button onClick={execute} styles="btn-lg">
-            Execute
+          <Button onClick={simulate} styles="btn-lg">
+            Simulate
           </Button>
         </div>
       </div>
