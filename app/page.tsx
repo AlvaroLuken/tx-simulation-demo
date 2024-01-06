@@ -9,7 +9,7 @@ import { InputTypeSelector } from "@common/components/InputTypeSelector";
 import { TransactionSelector } from "@common/components/TransactionSelector";
 import { mockSimulateAssetChanges, mockSimulateExecution } from "@common/utils/mocks";
 import { formatResponse, formatParams } from "@common/utils/formatResponse";
-import { DEFAULT_DATA_DISPLAY, HELP_TEXTS } from "@common/utils/constants";
+import { DEFAULT_DATA_DISPLAY, HELP_TEXTS, LOOM_DEMO_URL } from "@common/utils/constants";
 
 export default function Home() {
   const [executionType, setExecutionType] = useState<ExecutionType>("SIMULATE_EXECUTION");
@@ -70,8 +70,6 @@ export default function Home() {
     setDataDisplay(DEFAULT_DATA_DISPLAY);
     setIsLoading(false);
   }
-
-
   useEffect(() => {
     reset();
     setParams([]);
@@ -103,6 +101,8 @@ export default function Home() {
   return (
     <main className="flex flex-col h-full">
       <div className="flex flex-col items-center gap-6 px-24 mt-6">
+      <iframe src={LOOM_DEMO_URL} frameBorder="0" allowFullScreen className=" w-[32rem] h-[20rem]"></iframe>
+
       <div className="collapse bg-base-200 cursor-pointer w-full rounded-lg" onClick={() => setExpandHelpText(curr => !curr)}>
           <input type="radio" name="my-accordion-1" checked={expandHelpText} />
           <div className="collapse-title text-lg font-medium">
@@ -146,7 +146,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="grid grid-cols-4 grid-rows-4 gap-3 m-2 flex-1 overflow-auto px-24">
+      <div className="flex flex-col gap-3 m-2 flex-1 overflow-auto px-24 h-[200px]">
         <div className="w-full h-full col-span-4 overflow-auto">
           <TransactionSelector
             setParams={setParams}
@@ -155,8 +155,8 @@ export default function Home() {
             multiSelect={bundle}
           />
         </div>
-        <div className="col-span-2 row-span-2">
-          <div className="flex flex-col h-full">
+        <div className="flex flex-row w-full gap-3 h-96">
+          <div className="flex flex-col h-full w-1/2">
             <div className="flex flex-row justify-between px-2">
               <div>
               Parameters being sent
@@ -176,11 +176,9 @@ export default function Home() {
               </div>
               </div>
             </div>
-          <DataDisplay text={paramsDisplay} />
+            <DataDisplay text={paramsDisplay} />
           </div>
-        </div>
-        <div className="col-span-2 row-span-2">
-          <div className="flex flex-col h-full">
+          <div className="flex flex-col h-full w-1/2">
             <div className="flex flex-row justify-between pb-[1rem] px-2">
               <div>
                 Returned parameters
